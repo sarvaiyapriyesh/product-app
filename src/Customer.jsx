@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import "./index.css"
+import { NavLink } from 'react-router-dom';
 
 class Customer extends Component {
     state = {
@@ -16,7 +18,7 @@ class Customer extends Component {
             },
             { id: 3, name: "mahesh", phone: "889000921", address: { city: "London" } },
             { id: 4, name: "aamir khan", phone: "552967601", address: { city: "indore" } },
-            { id: 5, name: "John", phone: "781566778", address: { city: "surath" } },
+            { id: 5, name: "John", phone: "", address: { city: "surath" } },
         ]
     }
     render() {
@@ -30,31 +32,39 @@ class Customer extends Component {
                         {this.state.count}
                     </span>
                 </button>
-                <table class="table table-hopver">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th scope="col">id</th>
                             <th scope="col">Name</th>
                             <th scope="col">Phone</th>
                             <th scope="col">Address</th>
+                            <th scope="col">NewPassword</th>
                         </tr>
                         <table class=""></table>
                     </thead>
                     <tbody>
                         {
                             this.state.Customers.map((cust) => {
-                                return(
+                                return (
                                     <tr key={cust.id}>
                                         <td>{cust.id}</td>
-                                        <td>{cust.name}</td>
-                                        <td>{cust.phone}</td>
+                                        <td className={this.customerNameStyle(cust.name)}>{cust.name}</td>
+                                        <td>
+                                            {cust.phone ? (cust.phone) : "Not available"}
+                                        </td>
                                         <td>{cust.address.city}</td>
+                                        <td>{cust.NewPassword}</td>
+                                        <td>
+                                            <NavLink to ={`/UpdateCustomer/${cust.id}`}>UPDATE</NavLink>
+                                        </td>
+
                                     </tr>
                                 );
                             }
                             )
                         }
-                        
+
                     </tbody>
                 </table>
 
@@ -63,6 +73,17 @@ class Customer extends Component {
     }
     changeCount = () => {
         this.setState({ count: 100 })
+    }
+    customerNameStyle= (custName) => {
+        if (custName.startsWith("s"))return "green-highlight border-left";
+        else if (custName.startsWith("j"))return "red-highlight border-right";
+        else return "";
+    }
+    componentDidMount=async()=>{
+        var response =await fetch("http://localhost:5000/users",{method:"GET"});
+        var users=await response.json();
+        console.log(users);
+        this.setState({customers:users})
     }
 }
 

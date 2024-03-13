@@ -1,40 +1,55 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 
-class Menubar extends Component {
+class NavBar extends Component {
     render() {
         return (
-            <div>
-                <nav class="navbar navbar-expand-lg bg-primary navbar-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand navbar-brand-" href="#" >Shoes Bazaar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Customer</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Products</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Dashboard</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Logout</a>
-        </li>
-      </ul>
-      
-    </div>
-  </div>
-</nav>
-            </div>
+            <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
+                <div className="container-fluid">
+                    <NavLink className="navbar-brand" href="#">Shoes Bazaar</NavLink>
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                            {
+                                !this.props.isLoggedIn ? (
+                                    <li className="nav-item">
+                                        <NavLink to="/" className="nav-link" activeclassName="active">Login</NavLink>
+                                    </li>) : ""
+                            }
+                            {
+                                (this.props.isLoggedIn) ? (
+                                    <li className="nav-item">
+                                        <NavLink  to="/cust" className="nav-link" activeclassName="active">Customer</NavLink>
+                                    </li>) : ("")
+                            }
+                            {
+                                (this.props.isLoggedIn) ? (
+                                    <li className="nav-item">
+                                        <NavLink to="/card" className="nav-link" activeclassName="active">Product</NavLink>
+                                    </li>) : ("")
+                            }
+                            {
+                                (this.props.isLoggedIn) ? (
+
+                                    <li className="nav-item">
+                                        <NavLink to="*" className="nav-link" activeclassName="active">Dashboard</NavLink>
+                                    </li>) : ("")
+                            }
+                            {
+                                (this.props.isLoggedIn) ? (
+
+                                    <li className="nav-item">
+                                        <NavLink to="/register" className="nav-link" activeclassName="active">Logout</NavLink>
+                                    </li>) : ("")
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </nav>
         );
     }
 }
 
-export default Menubar;
+export default NavBar;
